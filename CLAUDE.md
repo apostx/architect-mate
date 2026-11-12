@@ -9,7 +9,8 @@ Guidance for AI coding sessions in this repository. Development continues in onl
 3. [docs/roadmap.md](docs/roadmap.md): the iterations. Work only within the scope of the current approved iteration.
 4. [docs/challenges.md](docs/challenges.md): the direction for challenge content, candidate challenges and known validation gaps.
 5. [docs/validator-issues.md](docs/validator-issues.md): issues reported to SolutionValidator and what they block.
-6. SolutionValidator's own docs, for the installed version: `node_modules/solution-validator/README.md` and `node_modules/solution-validator/docs/` (formats, finding codes, component model).
+6. [docs/challenge-format.md](docs/challenge-format.md): the challenge file format, fixtures and how a solution is evaluated.
+7. SolutionValidator's own docs, for the installed version: `node_modules/solution-validator/README.md` and `node_modules/solution-validator/docs/` (formats, finding codes, component model).
 
 ## Rules
 
@@ -48,7 +49,7 @@ SolutionValidator is not published to npm yet. It is installed from the source t
 
 To upgrade: change the tag in `package.json`, run `npm install`, read the library's `CHANGELOG.md` for breaking changes, and run `npm run check`. Upgrade in its own pull request (`build(deps): ...`). When the library is on npm, switch to the npm package and remove the aliases and paths.
 
-Online sessions need network access to `codeload.github.com` and `registry.npmjs.org` for `npm ci`.
+Online sessions need network access to `codeload.github.com` and `registry.npmjs.org` for `npm ci`. In Claude Code cloud sessions, GitHub downloads are limited to the repositories attached to the session, so `apostx/solution-validator` must be attached too (with the `add_repo` tool, or by selecting it when the session starts); otherwise `codeload.github.com` answers 403.
 
 ## Reporting to SolutionValidator
 

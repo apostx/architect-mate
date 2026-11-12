@@ -30,13 +30,26 @@ Each candidate must be verified against SolutionValidator before it is implement
 
 ### C1. Serverless orders API
 
-**Approved as the first challenge** ([design.md §11](design.md#11-first-challenge--decided-2026-11-12)).
+**Approved as the first challenge** ([design.md §11](design.md#11-first-challenge--decided-2026-11-12)). **Verified** against SolutionValidator v0.13.0 on 2026-11-12 and implemented in [`src/challenges/serverless-orders-api.json`](../src/challenges/serverless-orders-api.json).
 
-*A small online shop wants customers to place orders through a public HTTPS API. The team does not want to manage servers. Orders must be stored durably, and the order data must not be accessible directly from the internet.*
+*A small online shop wants its customers to place orders through a public HTTPS API. The development team is small and does not want to manage servers, so the order logic must run in AWS Lambda. Every order must be stored, and the order data must not be directly accessible from the internet.*
 
-- `reachable`: users (provided) → the order store (role), action `write`.
-- `not-reachable`: users → any `data-store` directly.
-- `uses`: at least one `compute` component without servers to manage (for example `aws.lambda`). How "without servers" is expressed needs checking: by type, or by a trait or role.
+Palette: API Gateway (endpoint, routes), Lambda (permissions), DynamoDB, S3 (public access). Provided: Customers (`core.internet`, locked). Role: `order-store`. Analysis: logical level, `pack-defaults`.
+
+| Requirement | SolutionValidator check |
+|---|---|
+| `place-orders` | `reachable` from Customers to the `order-store` role, last action `write` |
+| `https-api` | `reachable` from Customers to `aws.api-gateway` on port `https` |
+| `private-orders` | `not-reachable` from Customers to the `order-store` role (every action it controls) |
+| `uses-lambda` | `uses` `aws.lambda`, at least 1 |
+
+Verification ([fixtures](../test/fixtures/challenges/serverless-orders-api/), [test](../test/challenges.test.ts)):
+
+- Pass: the reference (API Gateway → Lambda → DynamoDB), a private S3 bucket as the order store, and a solution that leaves the API endpoint and the bucket's public access unset (pack defaults: public API, private bucket).
+- Fail: no permission or read-only permission on the table; a public bucket; no route; a private API; no API Gateway; no Lambda; customers writing into a bucket; a missing connection; a connection that reads instead of writing; the role on the function.
+- Incomplete (not evaluated): the role is not assigned.
+- Every requirement and every connection is decidable in all of them. Under `strict` assumptions, unset settings would make them `undecidable`; that is why the challenge uses `pack-defaults`.
+- What the library cannot check: that no servers are used ([#30](https://github.com/apostx/solution-validator/issues/30)); the palette offers none. That the order path goes through Lambda ([#31](https://github.com/apostx/solution-validator/issues/31)) follows from the pack: data stores accept writes only from compute. Reported while verifying: [#41](https://github.com/apostx/solution-validator/issues/41)–[#45](https://github.com/apostx/solution-validator/issues/45) ([validator-issues.md](validator-issues.md)).
 
 ### C2. Static website with a private bucket
 
