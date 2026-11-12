@@ -76,9 +76,18 @@ Each candidate must be verified against SolutionValidator before it is implement
 
 These are common in exam questions and interviews. Challenges about them wait until the library supports them. When a planned challenge needs one of them, report it to SolutionValidator as an issue ([CLAUDE.md](../CLAUDE.md#reporting-to-solutionvalidator)) instead of checking it in the game, and list it in [validator-issues.md](validator-issues.md).
 
-- Messaging and decoupling: queues and topics (SQS, SNS, EventBridge). The `core` pack has a `messaging` category, but the `aws` pack has no messaging types.
-- Caching (ElastiCache, DAX), DNS and failover routing (Route 53), user authentication (Cognito), encryption and keys (KMS), secrets.
-- Containers (ECS, EKS, Fargate), streaming (Kinesis), file storage (EFS).
-- Backup and disaster recovery: RPO, RTO, cross-region replication.
-- Comparative qualities that exam answers often hinge on: lowest cost, least operational overhead, lowest latency, highest throughput.
-- Interview topics: load and scale estimates, throughput, sharding and partitioning, consistency models, rate limiting.
+All of them are reported ([validator-issues.md](validator-issues.md)):
+
+- Forbidding components ("no servers to manage", "do not use X"): `uses` has no maximum ([#30](https://github.com/apostx/solution-validator/issues/30)).
+- Requiring a path through a component (decoupling, caching, "only through the CDN") ([#31](https://github.com/apostx/solution-validator/issues/31)).
+- Messaging and decoupling: queues and topics (SQS, SNS, EventBridge) ([#32](https://github.com/apostx/solution-validator/issues/32)).
+- Caching: ElastiCache, DAX ([#33](https://github.com/apostx/solution-validator/issues/33)).
+- DNS and failover routing: Route 53 ([#34](https://github.com/apostx/solution-validator/issues/34)).
+- User authentication: Cognito, API Gateway authorizers ([#35](https://github.com/apostx/solution-validator/issues/35)).
+- Encryption and secrets, and requirements on settings in general: KMS, Secrets Manager ([#36](https://github.com/apostx/solution-validator/issues/36)).
+- Containers (ECS, EKS, Fargate), streaming (Kinesis), file storage (EFS) ([#37](https://github.com/apostx/solution-validator/issues/37)).
+- Backup and disaster recovery: regions, cross-region replication, RPO, RTO ([#38](https://github.com/apostx/solution-validator/issues/38)).
+- Comparative qualities that exam answers often hinge on: lowest cost, least operational overhead, lowest latency ([#39](https://github.com/apostx/solution-validator/issues/39)).
+- Interview topics: load and scale estimates, throughput, sharding and partitioning, consistency models, rate limiting ([#40](https://github.com/apostx/solution-validator/issues/40)).
+
+The last two touch what SolutionValidator lists as out of scope for its first version (cost estimation, runtime simulation), so they may be declined.
