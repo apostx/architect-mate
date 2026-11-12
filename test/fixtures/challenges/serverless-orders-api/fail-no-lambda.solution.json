@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "packs": ["core", "aws"],
+  "components": [
+    {
+      "id": "customers",
+      "type": "core.internet",
+      "label": "Customers"
+    },
+    {
+      "id": "orders-api",
+      "type": "aws.api-gateway",
+      "label": "Orders API",
+      "properties": {
+        "endpoint": "public",
+        "routes": [
+          {
+            "path": "/orders",
+            "target": "orders"
+          }
+        ]
+      }
+    },
+    {
+      "id": "orders",
+      "type": "aws.dynamodb",
+      "label": "Orders table",
+      "roles": ["order-store"]
+    }
+  ],
+  "intents": [
+    {
+      "id": "customers-to-orders-api",
+      "from": "customers",
+      "to": "orders-api",
+      "action": "invoke",
+      "port": "https"
+    },
+    {
+      "id": "orders-api-to-orders",
+      "from": "orders-api",
+      "to": "orders",
+      "action": "write"
+    }
+  ],
+  "meta": {
+    "note": "The API writes to the table directly. The challenge requires Lambda, and the aws pack does not model API Gateway service integrations (solution-validator#44).",
+    "expected": {
+      "status": "evaluated",
+      "verdict": "fail",
+      "requirements": {
+        "place-orders": "fail",
+        "https-api": "pass",
+        "private-orders": "pass",
+        "uses-lambda": "fail"
+      }
+    }
+  }
+}

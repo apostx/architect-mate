@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "packs": ["core", "aws"],
+  "components": [
+    {
+      "id": "customers",
+      "type": "core.internet",
+      "label": "Customers"
+    },
+    {
+      "id": "orders-api",
+      "type": "aws.api-gateway",
+      "label": "Orders API",
+      "properties": {
+        "endpoint": "public",
+        "routes": [
+          {
+            "path": "/orders",
+            "target": "place-order"
+          }
+        ]
+      }
+    },
+    {
+      "id": "place-order",
+      "type": "aws.lambda",
+      "label": "Place order",
+      "roles": ["order-store"],
+      "properties": {
+        "permissions": [
+          {
+            "resource": "orders",
+            "access": "write"
+          }
+        ]
+      }
+    },
+    {
+      "id": "orders",
+      "type": "aws.dynamodb",
+      "label": "Orders table"
+    }
+  ],
+  "intents": [
+    {
+      "id": "customers-to-orders-api",
+      "from": "customers",
+      "to": "orders-api",
+      "action": "invoke",
+      "port": "https"
+    },
+    {
+      "id": "orders-api-to-place-order",
+      "from": "orders-api",
+      "to": "place-order",
+      "action": "invoke"
+    },
+    {
+      "id": "place-order-to-orders",
+      "from": "place-order",
+      "to": "orders",
+      "action": "write"
+    }
+  ],
+  "meta": {
+    "note": "The order store role is given to the function, which cannot store data.",
+    "expected": {
+      "status": "evaluated",
+      "verdict": "fail",
+      "requirements": {
+        "place-orders": "fail",
+        "https-api": "pass",
+        "private-orders": "pass",
+        "uses-lambda": "pass"
+      }
+    }
+  }
+}

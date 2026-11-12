@@ -82,7 +82,7 @@ The first playable challenge is C1, "Serverless orders API" ([challenges.md](cha
 ## 12. Scoring and decidability — Decided (2026-11-12)
 
 - **No points.** The game shows each requirement's result and the overall result; it does not award points. Points may come later, only with the product owner's approval.
-- **Challenges are always decidable.** A challenge must be built so that, for a solution the player has completed, every requirement evaluates to `pass` or `fail`, never `undecidable`. The challenge and the game supply what a decision needs: the analysis options (proposed default: the `pack-defaults` assumption policy, so that ordinary settings the challenge does not ask about take the pack's defaults), the roles the requirements select, and the properties the challenge asks the player to set. The tests of every challenge assert that its reference and wrong solutions are decidable.
+- **Challenges are always decidable.** A challenge must be built so that, for a solution the player has completed, every requirement evaluates to `pass` or `fail`, never `undecidable`. The challenge and the game supply what a decision needs: the analysis options (proposed default: the `pack-defaults` assumption policy, so that ordinary settings the challenge does not ask about take the pack's defaults), the roles the requirements select, and the properties the challenge asks the player to set. The tests of every challenge assert that its reference and wrong solutions are decidable. **Adopted with Iteration 1:** every challenge so far uses `pack-defaults` ([challenge-format.md](challenge-format.md)).
 - If the player's solution is still incomplete (for example a role is not assigned yet), the game tells the player what is missing instead of evaluating it as `fail`.
 - If the library returns `undecidable` for a complete solution anyway, the game shows it as `undecidable` with the library's reason, never as `fail` or `pass`. It is a defect: fix the challenge, or, if the library could decide it, report it to SolutionValidator.
 
@@ -101,6 +101,8 @@ The product owner delegated the format to the developer AI. Constraints:
 - A challenge contains (or references) a SolutionValidator task that the library validates unchanged with `parseTask`. The game does not duplicate what the task already expresses (requirements, provided components, roles).
 - Game-only content sits next to it: for example the scenario text, a difficulty, and the component types the player may use.
 - Document the format in this document (or a `docs/challenge-format.md` it links to) when it is implemented, and validate challenge files in tests.
+
+**Implemented (2026-11-12):** [challenge-format.md](challenge-format.md). One JSON file per challenge with the task inline; the palette lists the types and the editable properties; positions on the canvas live in the library's `meta`; fixture solutions carry their expected result in `meta.expected`.
 
 ## 16. Open questions
 
