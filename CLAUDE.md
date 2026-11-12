@@ -8,7 +8,8 @@ Guidance for AI coding sessions in this repository. Development continues in onl
 2. [docs/design.md](docs/design.md): decisions. Items marked **Decided** are settled; items marked **Proposed** are not requirements yet. Open questions are listed at the end.
 3. [docs/roadmap.md](docs/roadmap.md): the iterations. Work only within the scope of the current approved iteration.
 4. [docs/challenges.md](docs/challenges.md): the direction for challenge content, candidate challenges and known validation gaps.
-5. SolutionValidator's own docs, for the installed version: `node_modules/solution-validator/README.md` and `node_modules/solution-validator/docs/` (formats, finding codes, component model).
+5. [docs/validator-issues.md](docs/validator-issues.md): issues reported to SolutionValidator and what they block.
+6. SolutionValidator's own docs, for the installed version: `node_modules/solution-validator/README.md` and `node_modules/solution-validator/docs/` (formats, finding codes, component model).
 
 ## Rules
 
@@ -18,6 +19,7 @@ Guidance for AI coding sessions in this repository. Development continues in onl
 - **Ask first** before deciding scoring, evaluation timing, challenge structure, UI flow, persistence or additional modes.
 - **Record decisions:** when a proposal or open question is decided, update `docs/design.md` and `docs/roadmap.md` in the same pull request.
 - **SolutionValidator owns the model and the validation.** Use its solution and task formats, packs and verdicts. Do not create a competing data model and do not reimplement validation in the game. If a challenge needs a check the library cannot do, explain the gap (see `docs/challenges.md`) instead of faking a result.
+- **Report every library gap and bug to SolutionValidator** by opening an issue there (see [Reporting to SolutionValidator](#reporting-to-solutionvalidator)). This is mandatory, not optional.
 - **Three-state verdicts:** never show `undecidable` as `fail` or `pass`, and never claim more than the library established.
 - **No AI** in validation, scoring or explanations in the product.
 - **Static site:** the game runs in the browser on GitHub Pages, with no backend. `src/` must not use Node.js modules (Biome enforces it).
@@ -47,6 +49,24 @@ SolutionValidator is not published to npm yet. It is installed from the source t
 To upgrade: change the tag in `package.json`, run `npm install`, read the library's `CHANGELOG.md` for breaking changes, and run `npm run check`. Upgrade in its own pull request (`build(deps): ...`). When the library is on npm, switch to the npm package and remove the aliases and paths.
 
 Online sessions need network access to `codeload.github.com` and `registry.npmjs.org` for `npm ci`.
+
+## Reporting to SolutionValidator
+
+The product owner decided (2026-11-12): whenever SolutionValidator
+
+- cannot evaluate something that could be decided deterministically, without AI, or
+- has a bug, an inconsistency, a misleading finding or a mismatch with its documentation, or
+- gets in the way of a consumer in another way (installation, API, packaging),
+
+open an issue in [apostx/solution-validator](https://github.com/apostx/solution-validator/issues). Do not work around it with validation logic in the game.
+
+1. Search the existing issues first (`gh issue list -R apostx/solution-validator --state all --search "<keywords>"`) and comment on a matching one instead of opening a duplicate.
+2. Write the issue in English. Start the body with "Reported by [ArchitectMate](https://github.com/apostx/architect-mate), a consumer of this library." Include: what the game needs and why (for example the challenge it blocks), a minimal solution and task JSON that reproduces it, the expected and the actual result (verdicts and finding codes), and the library version. Describe possible fixes as options; the library's maintainer decides.
+3. Label it `bug` for defects and `enhancement` for missing capabilities.
+4. Add it to [docs/validator-issues.md](docs/validator-issues.md) with its link, what it blocks and the workaround, if any. Mention it in the pull request description and in the reply to the product owner.
+5. If the session cannot create issues in that repository (for example no GitHub access to it), put the complete issue text into `docs/validator-issues.md` with the status "Draft, not filed" and ask the product owner to file it.
+
+Until the issue is resolved, leave the affected challenge out, or keep it out of the game, rather than faking a result.
 
 ## Branches, merging and releases
 
