@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": [],
+    // SolutionValidator is installed from its release tag's source tarball (it is not on npm
+    // yet), so it is compiled from source. See docs/design.md, "SolutionValidator dependency".
+    "paths": {
+      "solution-validator": ["./node_modules/solution-validator/src/index.ts"],
+      "solution-validator/packs/*": ["./node_modules/solution-validator/src/packs/*.ts"]
+    }
+  }
+}
