@@ -1,6 +1,6 @@
 # Challenges
 
-> **Status:** Candidates only · 2026-11-12. No challenge is approved or implemented yet.
+> **Status:** 2026-11-12 · C1 is approved as the first challenge (Iteration 1). The others are candidates.
 
 This document records the direction for challenge content ([design.md §9](design.md#9-challenge-content--decided-2026-11-12)), candidate challenges, and what SolutionValidator cannot check yet.
 
@@ -29,6 +29,8 @@ Selectors pick components by provided `id`, `type`, `category`, `trait` or a `ro
 Each candidate must be verified against SolutionValidator before it is implemented: a reference solution passes and typical mistakes fail.
 
 ### C1. Serverless orders API
+
+**Approved as the first challenge** ([design.md §11](design.md#11-first-challenge--decided-2026-11-12)).
 
 *A small online shop wants customers to place orders through a public HTTPS API. The team does not want to manage servers. Orders must be stored durably, and the order data must not be accessible directly from the internet.*
 
@@ -72,7 +74,7 @@ Each candidate must be verified against SolutionValidator before it is implement
 
 ## Gaps: topics SolutionValidator cannot check yet
 
-These are common in exam questions and interviews. Challenges about them wait until the library supports them; propose library changes in the SolutionValidator repository instead of checking them in the game.
+These are common in exam questions and interviews. Challenges about them wait until the library supports them. When a planned challenge needs one of them, report it to SolutionValidator as an issue ([CLAUDE.md](../CLAUDE.md#reporting-to-solutionvalidator)) instead of checking it in the game, and list it in [validator-issues.md](validator-issues.md).
 
 - Messaging and decoupling: queues and topics (SQS, SNS, EventBridge). The `core` pack has a `messaging` category, but the `aws` pack has no messaging types.
 - Caching (ElastiCache, DAX), DNS and failover routing (Route 53), user authentication (Cognito), encryption and keys (KMS), secrets.
