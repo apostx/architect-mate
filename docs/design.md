@@ -154,5 +154,6 @@ These come from the vision or from the work so far. None is decided; ask the pro
 | Q5 | Is a sandbox (free design) mode wanted later? | Not a first-release requirement. |
 | Q8 | Should GitHub Pages serve every `main` push or only releases? | Currently every push to `main`. |
 | Q9 | Should the guided solution walkthrough (§17) be built, and in which form? | Proposed on 2026-11-13. |
+| Q10 | Should the canvas draw components in the style of DomainMap's architecture views? | Optional, raised by the product owner on 2026-11-13. Designs on the "Diagram styles" page of the design canvas (§8): the current style, DomainMap's map cards (white cards with a colored strip, regions for the internet and AWS) and its C4 boxes (filled shapes, cylinders for data stores, dashed relations and boundary). A region drawn around the AWS components would be visual only, not a network zone. |
 
 Decided: Q1 (§11), Q2 (§12), Q3 (§14), Q4 (§13), Q6 (§15), Q7 (§16).
