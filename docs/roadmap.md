@@ -1,13 +1,13 @@
 # Roadmap
 
-> **Status:** 2026-11-12 · **Current iteration: 1 (First playable challenge), approved, not started**
+> **Status:** 2026-11-13 · **Current iteration: 1 (First playable challenge), implemented, in review**
 
 Only the current iteration is a commitment. Later iterations are proposals: their scope is confirmed with the product owner before each one starts. Decisions and open questions are in [design.md](design.md).
 
 | # | Iteration | Version | Status |
 |---|---|---|---|
 | 0 | Foundations | none (no `feat` commits) | Done |
-| 1 | First playable challenge | 0.1.0 | Approved |
+| 1 | First playable challenge | 0.1.0 | Implemented, in review |
 
 ## Iteration 0 — Foundations (done)
 
@@ -33,10 +33,21 @@ Scope:
 
 Out of scope: points, accounts, persistence, progression, timers, a sandbox mode, more challenges. After the product owner's feedback on the working version, refinements are planned as follow-up work.
 
+Done (2026-11-13):
+
+1. Three layout variants on a Claude Design canvas; the product owner chose B, "canvas first, results drawer" ([design.md §16](design.md#16-challenge-screen-layout--decided-2026-11-13)).
+2. C1 verified against SolutionValidator v0.13.0 and implemented in the [challenge format](challenge-format.md), with 15 fixture solutions (3 pass, 11 fail, 1 incomplete), all decidable. Reported [solution-validator#41](https://github.com/apostx/solution-validator/issues/41) to [#45](https://github.com/apostx/solution-validator/issues/45) ([validator-issues.md](validator-issues.md)).
+3. Visual editing as described in [design.md §14](design.md#14-editing-interactions--decided-2026-11-12-delegated).
+4. Evaluation on the Evaluate button, with the incomplete, evaluated and outdated states.
+5. The placeholder page is replaced; the footer keeps the versions and the source link.
+
+Next: the product owner's feedback on the editing interactions (§14), then the release pull request for `0.1.0`.
+
 Release: the iteration's `feat` commits produce `0.1.0`; merge the release pull request when the iteration is complete.
 
 ## Later (not scheduled; each item needs approval)
 
+- A guided solution walkthrough: the problems a challenge's solution must cover, then the solution built step by step with explanations of the concepts ([design.md §17](design.md#17-guided-solution-walkthrough--proposed-2026-11-13), Q9).
 - More challenges from [challenges.md](challenges.md), from simple to harder.
 - System design interview–style challenges, once SolutionValidator can check what they need.
 - Scoring, if the product owner wants points later (§12).
