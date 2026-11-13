@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "packs": ["core", "aws"],
+  "components": [
+    {
+      "id": "customers",
+      "type": "core.internet",
+      "label": "Customers"
+    },
+    {
+      "id": "place-order",
+      "type": "aws.lambda",
+      "label": "Place order",
+      "properties": {
+        "permissions": [
+          {
+            "resource": "orders",
+            "access": "write"
+          }
+        ]
+      }
+    },
+    {
+      "id": "orders",
+      "type": "aws.dynamodb",
+      "label": "Orders table",
+      "roles": ["order-store"]
+    }
+  ],
+  "intents": [
+    {
+      "id": "customers-to-place-order",
+      "from": "customers",
+      "to": "place-order",
+      "action": "invoke"
+    },
+    {
+      "id": "place-order-to-orders",
+      "from": "place-order",
+      "to": "orders",
+      "action": "write"
+    }
+  ],
+  "meta": {
+    "note": "Customers call the function directly; Lambda does not accept calls from the internet.",
+    "expected": {
+      "status": "evaluated",
+      "verdict": "fail",
+      "requirements": {
+        "place-orders": "fail",
+        "https-api": "fail",
+        "private-orders": "pass",
+        "uses-lambda": "pass"
+      }
+    }
+  }
+}

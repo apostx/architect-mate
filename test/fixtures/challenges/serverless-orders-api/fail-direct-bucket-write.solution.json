@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "packs": ["core", "aws"],
+  "components": [
+    {
+      "id": "customers",
+      "type": "core.internet",
+      "label": "Customers"
+    },
+    {
+      "id": "orders",
+      "type": "aws.s3",
+      "label": "Orders bucket",
+      "roles": ["order-store"],
+      "properties": {
+        "publicAccess": true
+      }
+    }
+  ],
+  "intents": [
+    {
+      "id": "customers-to-orders",
+      "from": "customers",
+      "to": "orders",
+      "action": "write",
+      "port": "https"
+    }
+  ],
+  "meta": {
+    "note": "Customers write straight into a public bucket.",
+    "expected": {
+      "status": "evaluated",
+      "verdict": "fail",
+      "requirements": {
+        "place-orders": "fail",
+        "https-api": "fail",
+        "private-orders": "fail",
+        "uses-lambda": "fail"
+      }
+    }
+  }
+}

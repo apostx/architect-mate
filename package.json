@@ -25,6 +25,7 @@
     "check": "npm run typecheck && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
+    "@xyflow/react": "^12.12.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "solution-validator": "https://codeload.github.com/apostx/solution-validator/tar.gz/refs/tags/v0.13.0"

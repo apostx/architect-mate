@@ -4,7 +4,7 @@ A minimalist, visual system design and solution architecture practice game. The 
 
 Solutions are modeled and validated by [SolutionValidator](https://github.com/apostx/solution-validator). The game runs entirely in the browser and is hosted on GitHub Pages: <https://apostx.github.io/architect-mate/>.
 
-> **Status:** early development. There is no playable challenge yet; the first one is being built (Iteration 1).
+> **Status:** early development. The first challenge, "Serverless orders API", is playable (Iteration 1).
 
 ## Documentation
 
@@ -12,6 +12,7 @@ Solutions are modeled and validated by [SolutionValidator](https://github.com/ap
 - [Design decisions](docs/design.md): decided and proposed items, open questions
 - [Roadmap](docs/roadmap.md): iterations and their scope
 - [Challenges](docs/challenges.md): challenge direction, candidates and validation gaps
+- [Challenge format](docs/challenge-format.md): challenge files, fixtures and evaluation
 - [SolutionValidator issues](docs/validator-issues.md): gaps and bugs reported to the library
 
 ## Development

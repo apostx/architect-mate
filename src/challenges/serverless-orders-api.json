@@ -1,0 +1,71 @@
+{
+  "formatVersion": 1,
+  "difficulty": "introductory",
+  "scenario": [
+    "A small online shop wants its customers to place orders through a public HTTPS API.",
+    "The development team is small and does not want to manage servers, so the order logic must run in AWS Lambda.",
+    "Every order must be stored, and the order data must not be directly accessible from the internet.",
+    "How would you design it?"
+  ],
+  "analysis": { "assumptions": "pack-defaults" },
+  "palette": [
+    { "type": "aws.api-gateway", "properties": ["endpoint", "routes"] },
+    { "type": "aws.lambda", "properties": ["permissions"] },
+    { "type": "aws.dynamodb", "properties": [] },
+    { "type": "aws.s3", "properties": ["publicAccess"] }
+  ],
+  "task": {
+    "schemaVersion": 1,
+    "id": "serverless-orders-api",
+    "title": "Serverless orders API",
+    "packs": ["core", "aws"],
+    "provided": [
+      {
+        "id": "customers",
+        "type": "core.internet",
+        "label": "Customers",
+        "locked": true,
+        "meta": { "position": { "x": 0, "y": 160 } }
+      }
+    ],
+    "roles": [
+      {
+        "id": "order-store",
+        "label": "Order store",
+        "description": "The component that stores the orders."
+      }
+    ],
+    "requirements": [
+      {
+        "id": "place-orders",
+        "type": "reachable",
+        "description": "Customers can place orders: a chain of working connections leads from Customers to the order store and ends with a write.",
+        "from": { "id": "customers" },
+        "to": { "role": "order-store" },
+        "action": "write"
+      },
+      {
+        "id": "https-api",
+        "type": "reachable",
+        "description": "Customers can call an API Gateway API over HTTPS.",
+        "from": { "id": "customers" },
+        "to": { "type": "aws.api-gateway" },
+        "port": "https"
+      },
+      {
+        "id": "private-orders",
+        "type": "not-reachable",
+        "description": "The order store is not directly accessible from the internet.",
+        "from": { "id": "customers" },
+        "to": { "role": "order-store" }
+      },
+      {
+        "id": "uses-lambda",
+        "type": "uses",
+        "description": "The solution uses at least one Lambda function.",
+        "select": { "type": "aws.lambda" },
+        "min": 1
+      }
+    ]
+  }
+}
